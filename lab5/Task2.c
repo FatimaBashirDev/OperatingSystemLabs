@@ -12,7 +12,7 @@
  int main() {
  pthread_t t1, t2;
  ThreadData data1 = {1, "My name is Fatima Bashir"};
- ThreadData data2 = {2, "My cgpa is 3.37"};
+ ThreadData data2 = {2, "My cgpa is 3.39"};
  pthread_create(&t1, NULL, printData, &data1);
  pthread_create(&t2, NULL, printData, &data2);
  pthread_join(t1, NULL);

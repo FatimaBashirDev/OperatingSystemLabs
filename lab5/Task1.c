@@ -11,7 +11,7 @@ void* calculate_double(void* arg) {
 
 int main() {
     pthread_t thread_id;
-    float cgpa = 3.37;
+    float cgpa = 3.39;
 
     printf("Creating thread with CGPA: %.2f\n", cgpa);
 
