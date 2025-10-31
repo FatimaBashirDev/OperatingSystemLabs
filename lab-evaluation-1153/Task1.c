@@ -20,5 +20,5 @@ int balance = 5000;
 pthread_mutex_t lock;
 
 void* deposit(void* arg) {
-  
+  int amount = *(int*)arg;
 }
