@@ -1,0 +1,103 @@
+// Write a C program that simulates a bank account with multiple transactions:
+
+ 
+
+// 1.   Create a shared global variable
+
+// 2.  Create 4 threads:
+
+//   Thread 1: Deposits 1000 (repeat 5 times)
+
+//   Thread 2: Withdraws 500 (repeat 5 times)
+
+//   Thread 3: Deposits 800 (repeat 5 times)
+
+//   Thread 4: Withdraws 300 (repeat 5 times)
+
+// 3.  Use mutex to protect balance updates
+
+// 4.  Each thread should print after each transaction:   Thread ID
+
+//   Operation (Deposit/Withdraw)   Amount
+
+
+// initialized to 5000
+
+//   New balance
+
+// 5.  Main thread prints final balance
+
+
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+// Shared global variable
+int balance = 5000;
+
+// Mutex for protecting balance updates
+pthread_mutex_t lock;
+
+// Deposit function
+void* deposit(void* arg) {
+    int amount = *(int*)arg;
+    for (int i = 0; i < 5; i++) {
+        pthread_mutex_lock(&lock);  // lock the critical section
+        balance += amount;
+        printf("Thread %lu | Deposit: %d | New Balance: %d\n", pthread_self(), amount, balance);
+        pthread_mutex_unlock(&lock);  // unlock
+        usleep(100000); // sleep for 0.1s to simulate delay
+    }
+    return NULL;
+}
+
+// Withdraw function
+void* withdraw(void* arg) {
+    int amount = *(int*)arg;
+    for (int i = 0; i < 5; i++) {
+        pthread_mutex_lock(&lock);
+        if (balance >= amount) {
+            balance -= amount;
+            printf("Thread %lu | Withdraw: %d | New Balance: %d\n", pthread_self(), amount, balance);
+        } else {
+            printf("Thread %lu | Withdraw: %d | Failed (Insufficient Balance: %d)\n", pthread_self(), amount, balance);
+        }
+        pthread_mutex_unlock(&lock);
+        usleep(100000);
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2, t3, t4;
+    int dep1 = 1000, dep2 = 800;
+    int wd1 = 500, wd2 = 300;
+
+    // Initialize mutex
+    pthread_mutex_init(&lock, NULL);
+
+    // Print initial balance
+    printf("Initial Balance: %d\n\n", balance);
+
+    // Create 4 threads
+    pthread_create(&t1, NULL, deposit, &dep1);
+    pthread_create(&t2, NULL, withdraw, &wd1);
+    pthread_create(&t3, NULL, deposit, &dep2);
+    pthread_create(&t4, NULL, withdraw, &wd2);
+
+    // Wait for threads to finish
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    pthread_join(t3, NULL);
+    pthread_join(t4, NULL);
+
+    // Destroy mutex
+    pthread_mutex_destroy(&lock);
+
+    // Print final balance
+    printf("\nFinal Balance: %d\n", balance);
+
+    return 0;
+}
