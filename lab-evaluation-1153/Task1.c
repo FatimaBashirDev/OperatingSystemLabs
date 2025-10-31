@@ -22,5 +22,7 @@ void* deposit(void* arg) {
 for (int i = 0; i < 5; i++) {
  pthread_mutex_lock(&lock);
   balance += amount;
+    printf("Thread %lu | Deposit: %d | New Balance: %d\n", pthread_self(), amount, balance);
     }
+
 }
