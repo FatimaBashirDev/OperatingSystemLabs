@@ -15,13 +15,11 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-
 int balance = 5000;
 pthread_mutex_t lock;
-
 void* deposit(void* arg) {
   int amount = *(int*)arg;
 for (int i = 0; i < 5; i++) {
- 
+ pthread_mutex_lock(&lock);
     }
 }
