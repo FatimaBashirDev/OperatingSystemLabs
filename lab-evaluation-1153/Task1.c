@@ -24,5 +24,6 @@ for (int i = 0; i < 5; i++) {
   balance += amount;
     printf("Thread %lu | Deposit: %d | New Balance: %d\n", pthread_self(), amount, balance);
     }
+  pthread_mutex_unlock(&lock);  
 
 }
