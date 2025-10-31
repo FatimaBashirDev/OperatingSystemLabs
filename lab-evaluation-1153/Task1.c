@@ -31,7 +31,7 @@ for (int i = 0; i < 5; i++) {
 void* withdraw(void* arg) {
    int amount = *(int*)arg;
    for (int i = 0; i < 5; i++) {
- 
+ pthread_mutex_lock(&lock);
        
     }
 }
