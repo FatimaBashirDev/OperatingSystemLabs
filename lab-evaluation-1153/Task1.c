@@ -17,3 +17,4 @@
 #include <unistd.h>
 
 int balance = 5000;
+pthread_mutex_t lock;
