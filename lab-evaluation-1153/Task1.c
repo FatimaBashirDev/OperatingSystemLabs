@@ -21,4 +21,7 @@ pthread_mutex_t lock;
 
 void* deposit(void* arg) {
   int amount = *(int*)arg;
+for (int i = 0; i < 5; i++) {
+ 
+    }
 }
