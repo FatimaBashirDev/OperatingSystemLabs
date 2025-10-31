@@ -15,3 +15,5 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+
+int balance = 5000;
